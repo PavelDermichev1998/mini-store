@@ -1,23 +1,49 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ProductsType} from "../../../store/reducer";
+import {Button} from "@mui/material";
+import {ProductWithOffer} from "./ProductWithOffer/ProductWithOffer";
 
 
-export const Product = ({product} : ProductPropsType) => {
+export const Product = ({product, keysId, addForBasket}: ProductPropsType) => {
 
-    const price = product.SKU
-    console.log(price)
+    const [show, setShow] = useState<boolean>(true)
 
-    return <div>
-      <div className="img">{product.PICTURE}</div>
-      <div className="img">{product.PRICE ? product.PRICE : 'null'}</div>
+    const SetViewMode = () => {
+        setShow(!show)
+    }
 
-      <div>{}</div>
-      <div>3</div>
-      <div>4</div>
-  </div>
+     addForBasket();
+
+    return (
+        <div>
+            <div className="img">{product.PICTURE}</div>
+            <div>{product.NAME}</div>
+            <div style={{padding: '10px'}}>
+                {product.SKU && keysId
+                    ? <div>
+                        {keysId.map(keyId => (
+                            <ProductWithOffer
+                                keyId={keyId}
+                                product={product}
+                                show={show}
+                                key={product.ID + keyId}
+                            />))}
+                        <Button variant={'contained'} onClick={SetViewMode} style={{margin: '10px'}}>
+                            {show ? 'Подробнее' : 'Свернуть'}
+                        </Button>
+                    </div>
+                    : <div>
+                        <div>{product.PRICE}$</div>
+                        <Button variant={'outlined'} onClick={addForBasket}>Добавить в корзину</Button>
+                    </div>
+                }
+            </div>
+        </div>
+    )
 }
-
 
 type ProductPropsType = {
     product: ProductsType
+    keysId: Array<string> | null
+    addForBasket: () => void
 }

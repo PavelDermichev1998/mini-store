@@ -30,9 +30,9 @@ export type ProductsType = {
     WEIGHT?: string,
     LENGTH?: string,
     STOCK?: string,
-    SKU?: SKUType,
+    SKU: SKUType,
 }
-type SKUType = {[ID: string]: {
+export type SKUType = {[ID: string]: {
     ID: string,
     NAME: string,
     SORT: string,
