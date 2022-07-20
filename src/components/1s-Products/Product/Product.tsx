@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 import {ProductWithOffer} from "./ProductWithOffer/ProductWithOffer";
 
 
-export const Product = ({product, keysId, addForBasket}: ProductPropsType) => {
+export const Product = ({product, keysId}: ProductPropsType) => {
 
     const [show, setShow] = useState<boolean>(true)
 
@@ -12,7 +12,9 @@ export const Product = ({product, keysId, addForBasket}: ProductPropsType) => {
         setShow(!show)
     }
 
-     addForBasket();
+     const addForBasketHandler = () => {
+
+     };
 
     return (
         <div>
@@ -34,7 +36,7 @@ export const Product = ({product, keysId, addForBasket}: ProductPropsType) => {
                     </div>
                     : <div>
                         <div>{product.PRICE}$</div>
-                        <Button variant={'outlined'} onClick={addForBasket}>Добавить в корзину</Button>
+                        <Button variant={'outlined'} onClick={addForBasketHandler}>Добавить в корзину</Button>
                     </div>
                 }
             </div>
@@ -45,5 +47,4 @@ export const Product = ({product, keysId, addForBasket}: ProductPropsType) => {
 type ProductPropsType = {
     product: ProductsType
     keysId: Array<string> | null
-    addForBasket: () => void
 }

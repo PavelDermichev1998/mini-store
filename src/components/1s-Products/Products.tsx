@@ -6,7 +6,7 @@ import {Paper} from "@mui/material";
 import {Product} from "./Product/Product";
 
 
-export const Products = ({products, addForBasket}: ProductsPropsType) => {
+export const Products = ({products}: ProductsPropsType) => {
 
     return <div className={style.products_block}>
         <Grid container spacing={4}>
@@ -17,7 +17,6 @@ export const Products = ({products, addForBasket}: ProductsPropsType) => {
                             <Product
                                 product={prod}
                                 keysId={prod.SKU ? Object.keys(prod.SKU) : null}
-                                addForBasket={addForBasket}
                             />
                         </Paper>
                     </Grid>
@@ -29,5 +28,4 @@ export const Products = ({products, addForBasket}: ProductsPropsType) => {
 
 type ProductsPropsType = {
     products: Array<ProductsType>
-    addForBasket: () => void
 }

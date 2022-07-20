@@ -3,7 +3,7 @@ const initialState: ProductsStateType = products
 
 export const productsReducer = (state: ProductsStateType = initialState, action: ProductsActionsType): ProductsStateType => {
     switch (action.type) {
-        case 'REMOVE-TASK': {
+        case 'ADD-PRODUCT': {
             return state;
         }
         default:
@@ -11,8 +11,8 @@ export const productsReducer = (state: ProductsStateType = initialState, action:
     }
 }
 
-export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => {
-    return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
+export const addProductAC = (productId: string, SKUId?: string) => {
+    return {type: 'ADD-PRODUCT', productId, SKUId} as const
 }
 
 export type ProductsStateType = Array<ProductsType>
@@ -43,10 +43,6 @@ export type SKUType = {[ID: string]: {
 }}
 
 
-type RemoveTaskActionType = {
-    type: 'REMOVE-TASK',
-    todolistId: string
-    taskId: string
-}
+type AddProductActionType = ReturnType<typeof addProductAC>
 
-export type ProductsActionsType = RemoveTaskActionType
+export type ProductsActionsType = AddProductActionType
