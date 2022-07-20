@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
-import {ProductsType} from "../../../store/reducer";
+import {ProductsType} from "../../../store/productsReducer";
 import {Button} from "@mui/material";
 import {ProductWithOffer} from "./ProductWithOffer/ProductWithOffer";
+import {useDispatch} from "react-redux";
+import {addProductInBasketAC} from "../../../store/basketReducer";
+
 
 
 export const Product = ({product, keysId}: ProductPropsType) => {
+    const dispatch = useDispatch()
 
     const [show, setShow] = useState<boolean>(true)
 
@@ -12,9 +16,9 @@ export const Product = ({product, keysId}: ProductPropsType) => {
         setShow(!show)
     }
 
-     const addForBasketHandler = () => {
-
-     };
+    const addToBasketHandler = () => {
+        dispatch(addProductInBasketAC(product))
+    };
 
     return (
         <div>
@@ -36,7 +40,7 @@ export const Product = ({product, keysId}: ProductPropsType) => {
                     </div>
                     : <div>
                         <div>{product.PRICE}$</div>
-                        <Button variant={'outlined'} onClick={addForBasketHandler}>Добавить в корзину</Button>
+                        <Button variant={'outlined'} onClick={addToBasketHandler}>Добавить в корзину</Button>
                     </div>
                 }
             </div>

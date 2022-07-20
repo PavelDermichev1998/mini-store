@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import React from 'react';
-import {ProductsType} from "../../store/reducer";
+import {ProductsType} from "../../store/productsReducer";
 import style from './Products.module.css'
 import {Paper} from "@mui/material";
 import {Product} from "./Product/Product";

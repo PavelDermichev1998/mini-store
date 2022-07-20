@@ -1,18 +1,8 @@
 const products = require('./product.json')
 const initialState: ProductsStateType = products
 
-export const productsReducer = (state: ProductsStateType = initialState, action: ProductsActionsType): ProductsStateType => {
-    switch (action.type) {
-        case 'ADD-PRODUCT': {
+export const productsReducer = (state: ProductsStateType = initialState): ProductsStateType => {
             return state;
-        }
-        default:
-            return state;
-    }
-}
-
-export const addProductAC = (productId: string, SKUId?: string) => {
-    return {type: 'ADD-PRODUCT', productId, SKUId} as const
 }
 
 export type ProductsStateType = Array<ProductsType>
@@ -22,7 +12,7 @@ export type ProductsType = {
     SORT: string,
     TYPE: string,
     PICTURE: string,
-    PRICE?: string,
+    PRICE: string,
     COLOR_CODE?: string,
     COLOR_SAMPLE?: string,
     COVER_SIDE?: string,
@@ -41,8 +31,3 @@ export type SKUType = {[ID: string]: {
     PRICE: string,
     WEIGHT: number
 }}
-
-
-type AddProductActionType = ReturnType<typeof addProductAC>
-
-export type ProductsActionsType = AddProductActionType

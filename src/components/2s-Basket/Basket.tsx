@@ -6,41 +6,31 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {useDispatch} from "react-redux";
+import {BasketType, ChangeAmountValueAC, removeBasketItemAC} from "../../store/basketReducer";
+import {BasketItem} from "./BasketItem/BasketItem";
 
 
-function ccyFormat(num: number) {
+
+const ccyFormat = (num: number) => {
     return `${num.toFixed(2)}`;
 }
 
-function priceRow(qty: number, unit: number) {
-    return qty * unit;
+const subtotal = (items: Array<BasketType>) => {
+    return items.map(({ TOTAL_PRICE, AMOUNT }) => TOTAL_PRICE * AMOUNT).reduce((sum, i) => sum + i, 0);
 }
 
-function createRow(desc: string, qty: number, unit: number) {
-    const price = priceRow(qty, unit);
-    return {desc, qty, unit, price};
-}
+export const Basket = ({basketItems} : BasketPropsType) => {
+    const invoiceSubtotal = subtotal(basketItems);
+    const dispatch = useDispatch()
 
-interface Row {
-    desc: string;
-    qty: number;
-    unit: number;
-    price: number;
-}
+    const changeAmount = (id: string, value: number) => {
+        dispatch(ChangeAmountValueAC(id, value))
+    }
+    const removeBasketItem = (id: string) => {
+        dispatch(removeBasketItemAC(id))
+    }
 
-function subtotal(items: readonly Row[]) {
-    return items.map(({price}) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-    createRow('Paperclips (Box)', 100, 1.15),
-    createRow('Paper (Case)', 10, 45.99),
-    createRow('Waste Basket', 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-
-export const Basket = () => {
     return (<div style={{margin: '10px'}}>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 700}} aria-label="spanning table">
@@ -50,25 +40,34 @@ export const Basket = () => {
                             <TableCell align="left">Кол-во</TableCell>
                             <TableCell align="left">Цена/шт.</TableCell>
                             <TableCell align="left">Сумма</TableCell>
+                            <TableCell align="left"></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.desc}>
-                                <TableCell>{row.desc}</TableCell>
-                                <TableCell align="left">{row.qty}</TableCell>
-                                <TableCell align="left">{row.unit}</TableCell>
-                                <TableCell align="left">{ccyFormat(row.price)}</TableCell>
-                            </TableRow>
+                        {basketItems.map((prod) => (
+                            <BasketItem
+                                key={prod.ID + prod.NAME}
+                                id={prod.ID}
+                                name ={prod.NAME}
+                                amount={prod.AMOUNT}
+                                price={prod.PRICE}
+                                totalPrice={ccyFormat(prod.TOTAL_PRICE * prod.AMOUNT)}
+                                changeAmount={changeAmount}
+                                removeBasketItem={removeBasketItem}
+                            />
                         ))}
                         <TableRow>
                             <TableCell rowSpan={3}/>
                             <TableCell colSpan={2}>Итого</TableCell>
-                            <TableCell align="left">{ccyFormat(invoiceSubtotal)}</TableCell>
+                            <TableCell align="left">{ccyFormat(invoiceSubtotal)}$</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
         </div>
     );
+}
+
+type BasketPropsType = {
+    basketItems: Array<BasketType>
 }
