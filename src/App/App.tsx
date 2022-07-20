@@ -17,8 +17,8 @@ export const App = () => {
             <div>Каталог</div>
             <Products products={products}/>
             {basketItems.length
-            ?<Basket basketItems={basketItems}/>
-            : <></>
+                ? <Basket basketItems={basketItems}/>
+                : <></>
             }
         </div>
     );

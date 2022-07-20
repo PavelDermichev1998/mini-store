@@ -11,16 +11,15 @@ import {BasketType, ChangeAmountValueAC, removeBasketItemAC} from "../../store/b
 import {BasketItem} from "./BasketItem/BasketItem";
 
 
-
 const ccyFormat = (num: number) => {
     return `${num.toFixed(2)}`;
 }
 
 const subtotal = (items: Array<BasketType>) => {
-    return items.map(({ TOTAL_PRICE, AMOUNT }) => TOTAL_PRICE * AMOUNT).reduce((sum, i) => sum + i, 0);
+    return items.map(({TOTAL_PRICE, AMOUNT}) => TOTAL_PRICE * AMOUNT).reduce((sum, i) => sum + i, 0);
 }
 
-export const Basket = ({basketItems} : BasketPropsType) => {
+export const Basket = ({basketItems}: BasketPropsType) => {
     const invoiceSubtotal = subtotal(basketItems);
     const dispatch = useDispatch()
 
@@ -48,7 +47,7 @@ export const Basket = ({basketItems} : BasketPropsType) => {
                             <BasketItem
                                 key={prod.ID + prod.NAME}
                                 id={prod.ID}
-                                name ={prod.NAME}
+                                name={prod.NAME}
                                 amount={prod.AMOUNT}
                                 price={prod.PRICE}
                                 totalPrice={ccyFormat(prod.TOTAL_PRICE * prod.AMOUNT)}
