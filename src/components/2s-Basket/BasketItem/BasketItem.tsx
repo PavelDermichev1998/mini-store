@@ -3,7 +3,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-
+import {isNumber} from "../utils/utils";
 
 export const BasketItem = ({id, name, amount, price, totalPrice, changeAmount, removeBasketItem}: BasketItemPropsType) => {
 
@@ -12,16 +12,6 @@ export const BasketItem = ({id, name, amount, price, totalPrice, changeAmount, r
     }
     const removeItem = () => {
         removeBasketItem(id)
-    }
-    const isNumber = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        let charCode = (e.which) ? e.which : e.keyCode;
-        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-            e.preventDefault();
-        } else if (e.which === 46) {
-            e.preventDefault();
-        } else {
-            return true
-        }
     }
 
     return (

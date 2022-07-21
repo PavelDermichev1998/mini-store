@@ -4,9 +4,16 @@ import {ProductsType} from "../../store/productsReducer";
 import style from './Products.module.css'
 import {Paper} from "@mui/material";
 import {Product} from "./Product/Product";
+import {FilterForType} from "./FilterForType/FilterForType";
 
-export const Products = ({products}: ProductsPropsType) => {
+export const Products = ({products, filterForType, productsTypes, filterForAllType}: ProductsPropsType) => {
     return <div className={style.products_block}>
+        <FilterForType
+            products={products}
+            filterForType={filterForType}
+            productsTypes={productsTypes}
+            filterForAllType={filterForAllType}
+        />
         <Grid container spacing={2}>
             {
                 products.map(prod => {
@@ -26,4 +33,7 @@ export const Products = ({products}: ProductsPropsType) => {
 
 type ProductsPropsType = {
     products: Array<ProductsType>
+    filterForType: (productType: string) => void
+    productsTypes: Array<string>
+    filterForAllType: () => void
 }

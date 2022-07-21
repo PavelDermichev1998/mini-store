@@ -1,3 +1,4 @@
+
 const products = require('./product.json')
 const initialState: ProductsStateType = products
 
