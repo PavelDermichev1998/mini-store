@@ -1,7 +1,8 @@
 import * as React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import {Button} from "@mui/material";
+import {IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 
 export const BasketItem = ({id, name, amount, price, totalPrice, changeAmount, removeBasketItem}: BasketItemPropsType) => {
@@ -34,10 +35,12 @@ export const BasketItem = ({id, name, amount, price, totalPrice, changeAmount, r
                        onChange={changeAmountHandler}
                 />
             </TableCell>
-            <TableCell align="left">{price}$</TableCell>
-            <TableCell align="left">{totalPrice}$</TableCell>
+            <TableCell align="left">{price} руб.</TableCell>
+            <TableCell align="left">{totalPrice} руб.</TableCell>
             <TableCell align="left">
-                <Button onClick={removeItem}>X</Button>
+                <IconButton onClick={removeItem}>
+                    <Delete/>
+                </IconButton>
             </TableCell>
         </TableRow>
 

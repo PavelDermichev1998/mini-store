@@ -4,11 +4,10 @@ import {Button} from "@mui/material";
 import {ProductWithOffer} from "./ProductWithOffer/ProductWithOffer";
 import {useDispatch} from "react-redux";
 import {addProductInBasketAC} from "../../../store/basketReducer";
-
+import style from './Product.module.css'
 
 
 export const Product = ({product, keysId}: ProductPropsType) => {
-    const dispatch = useDispatch()
 
     const [show, setShow] = useState<boolean>(true)
 
@@ -16,15 +15,17 @@ export const Product = ({product, keysId}: ProductPropsType) => {
         setShow(!show)
     }
 
+    const dispatch = useDispatch()
+
     const addToBasketHandler = () => {
         dispatch(addProductInBasketAC(product))
     };
 
     return (
-        <div>
+        <div className={style.product}>
             <div className="img">{product.PICTURE}</div>
-            <div>{product.NAME}</div>
-            <div style={{padding: '10px'}}>
+            <div><b>{product.NAME}</b></div>
+            <div className={style.product_block}>
                 {product.SKU && keysId
                     ? <div>
                         {keysId.map(keyId => (
@@ -34,12 +35,12 @@ export const Product = ({product, keysId}: ProductPropsType) => {
                                 show={show}
                                 key={product.ID + keyId}
                             />))}
-                        <Button variant={'contained'} onClick={SetViewMode} style={{margin: '10px'}}>
+                        <Button variant={'contained'} onClick={SetViewMode} className={style.product_block__btn}>
                             {show ? 'Подробнее' : 'Свернуть'}
                         </Button>
                     </div>
                     : <div>
-                        <div>{product.PRICE}$</div>
+                        <div className={style.product_price}>{product.PRICE} руб.</div>
                         <Button variant={'outlined'} onClick={addToBasketHandler}>Добавить в корзину</Button>
                     </div>
                 }

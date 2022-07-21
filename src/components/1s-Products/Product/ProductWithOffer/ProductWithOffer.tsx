@@ -3,9 +3,10 @@ import {Button} from "@mui/material";
 import {ProductsType} from "../../../../store/productsReducer";
 import {addProductInBasketWithOfferAC} from "../../../../store/basketReducer";
 import {useDispatch} from "react-redux";
-
+import style from "../Product.module.css";
 
 export const ProductWithOffer = ({product, keyId, show}: ProductWithOfferPropsType) => {
+
     const dispatch = useDispatch()
 
     const addToBasketHandler = () => {
@@ -17,8 +18,14 @@ export const ProductWithOffer = ({product, keyId, show}: ProductWithOfferPropsTy
             ? <div>
                 <div>{product.SKU[keyId].NAME},</div>
                 {product.SKU[keyId].LENGTH && <div>длинна - {product.SKU[keyId].LENGTH} мм,</div>}
-                <div>{product.SKU[keyId].PRICE}$</div>
-                <Button variant={'outlined'} onClick={addToBasketHandler}>Добавить в корзину</Button>
+                <div className={style.product_price}>{product.SKU[keyId].PRICE} руб.</div>
+                <Button
+                    variant={'outlined'}
+                    onClick={addToBasketHandler}
+                    style={{marginBottom: '12px'}}
+                >
+                    Добавить в корзину
+                </Button>
             </div>
             : <></>
     )

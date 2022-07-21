@@ -5,11 +5,9 @@ import style from './Products.module.css'
 import {Paper} from "@mui/material";
 import {Product} from "./Product/Product";
 
-
 export const Products = ({products}: ProductsPropsType) => {
-
     return <div className={style.products_block}>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
             {
                 products.map(prod => {
                     return <Grid item xs={3} key={prod.ID}>

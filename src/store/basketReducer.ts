@@ -10,13 +10,13 @@ export const basketReducer = (state: Array<BasketType> = initialState, action: B
             if (basketId.includes(action.product.ID)) {
                 return state.map(pr => pr.ID === action.product.ID ? {...pr, AMOUNT: +pr.AMOUNT + 1} : {...pr})
             } else {
-                return [...state, {
+                return [{
                     ID: action.product.ID,
                     NAME: action.product.NAME,
                     AMOUNT: 1,
                     PRICE: action.product.PRICE,
                     TOTAL_PRICE: +action.product.PRICE,
-                }];
+                }, ...state];
             }
         }
         case 'ADD-PRODUCT-WITH-OFFER': {
@@ -25,13 +25,13 @@ export const basketReducer = (state: Array<BasketType> = initialState, action: B
             if (basketId.includes(action.product.SKU[action.SKUId].ID)) {
                 return state.map(pr => pr.ID === action.product.SKU[action.SKUId].ID ? {...pr, AMOUNT: +pr.AMOUNT + 1} : {...pr})
             } else {
-                return [...state, {
+                return [{
                     ID: action.product.SKU[action.SKUId].ID,
                     NAME: action.product.SKU[action.SKUId].NAME,
                     AMOUNT: 1,
                     PRICE: action.product.SKU[action.SKUId].PRICE,
                     TOTAL_PRICE: +action.product.SKU[action.SKUId].PRICE,
-                }];
+                }, ...state];
             }
         }
         case 'CHANGE-AMOUNT-IN-BASKET': {

@@ -9,19 +9,14 @@ import Paper from '@mui/material/Paper';
 import {useDispatch} from "react-redux";
 import {BasketType, ChangeAmountValueAC, removeBasketItemAC} from "../../store/basketReducer";
 import {BasketItem} from "./BasketItem/BasketItem";
+import {ccyFormat, subtotal} from "./utils/utils";
 
-
-const ccyFormat = (num: number) => {
-    return `${num.toFixed(2)}`;
-}
-
-const subtotal = (items: Array<BasketType>) => {
-    return items.map(({TOTAL_PRICE, AMOUNT}) => TOTAL_PRICE * AMOUNT).reduce((sum, i) => sum + i, 0);
-}
 
 export const Basket = ({basketItems}: BasketPropsType) => {
-    const invoiceSubtotal = subtotal(basketItems);
+
     const dispatch = useDispatch()
+
+    const invoiceSubtotal = subtotal(basketItems);
 
     const changeAmount = (id: string, value: number) => {
         dispatch(ChangeAmountValueAC(id, value))
@@ -30,7 +25,7 @@ export const Basket = ({basketItems}: BasketPropsType) => {
         dispatch(removeBasketItemAC(id))
     }
 
-    return (<div style={{margin: '10px'}}>
+    return (<div style={{margin: '0 0 10px 10px'}}>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 700}} aria-label="spanning table">
                     <TableHead>
@@ -58,7 +53,7 @@ export const Basket = ({basketItems}: BasketPropsType) => {
                         <TableRow>
                             <TableCell rowSpan={3}/>
                             <TableCell colSpan={2}>Итого</TableCell>
-                            <TableCell align="left">{ccyFormat(invoiceSubtotal)}$</TableCell>
+                            <TableCell align="left">{ccyFormat(invoiceSubtotal)} руб.</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

@@ -1,0 +1,9 @@
+.App {
+    text-align: center;
+    background-color: #f1f2f3;
+}
+
+.App_text {
+    font-size: 30px;
+    font-weight: 600;
+}
