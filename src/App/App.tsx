@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Products} from "../components/1s-Products/Products";
 import {Basket} from "../components/2s-Basket/Basket";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store/store";
 import {ProductsStateType} from "../store/productsReducer";
-import {BasketType} from "../store/basketReducer";
+import {BasketType, ChangeAmountValueAC, removeBasketItemAC} from "../store/basketReducer";
 import style from './App.module.css'
+import {subtotal} from "../components/2s-Basket/utils/utils";
 
 export const App = () => {
+
+    const dispatch = useDispatch()
 
     const products = useSelector<AppRootStateType, ProductsStateType>(state => state.products)
     const basketItems = useSelector<AppRootStateType, Array<BasketType>>(state => state.basket)
@@ -21,12 +24,23 @@ export const App = () => {
 
     const [newProducts, setNewProducts] = useState(products)
 
-    const filterForType = (productType: string) => {
+    const filterForType = useCallback((productType: string) => {
         setNewProducts(products.filter(pr => pr.TYPE === productType))
-    }
-    const filterForAllType = () => {
+    }, [products])
+
+    const filterForAllType = useCallback(() => {
         setNewProducts(products)
-    }
+    }, [products])
+
+    const invoiceSubtotal = subtotal(basketItems);
+
+    const changeAmount = useCallback((id: string, value: number) => {
+        dispatch(ChangeAmountValueAC(id, value))
+    },[])
+
+    const removeBasketItem = useCallback((id: string) => {
+        dispatch(removeBasketItemAC(id))
+    },[])
 
     return (
         <div className={style.App}>
@@ -38,7 +52,12 @@ export const App = () => {
                 filterForAllType={filterForAllType}
             />
             {basketItems.length
-                ? <Basket basketItems={basketItems}/>
+                ? <Basket
+                    basketItems={basketItems}
+                    invoiceSubtotal={invoiceSubtotal}
+                    changeAmount={changeAmount}
+                    removeBasketItem={removeBasketItem}
+                />
                 : <></>
             }
         </div>

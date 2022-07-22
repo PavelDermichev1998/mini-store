@@ -6,25 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {useDispatch} from "react-redux";
-import {BasketType, ChangeAmountValueAC, removeBasketItemAC} from "../../store/basketReducer";
+import {BasketType} from "../../store/basketReducer";
 import {BasketItem} from "./BasketItem/BasketItem";
-import {ccyFormat, subtotal} from "./utils/utils";
+import {ccyFormat} from "./utils/utils";
 
-
-export const Basket = ({basketItems}: BasketPropsType) => {
-
-    const dispatch = useDispatch()
-
-    const invoiceSubtotal = subtotal(basketItems);
-
-    const changeAmount = (id: string, value: number) => {
-        dispatch(ChangeAmountValueAC(id, value))
-    }
-    const removeBasketItem = (id: string) => {
-        dispatch(removeBasketItemAC(id))
-    }
-
+export const Basket = React.memo(({basketItems, invoiceSubtotal, changeAmount, removeBasketItem}: BasketPropsType) => {
     return (<div style={{margin: '0 0 10px 10px'}}>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 700}} aria-label="spanning table">
@@ -60,8 +46,11 @@ export const Basket = ({basketItems}: BasketPropsType) => {
             </TableContainer>
         </div>
     );
-}
+})
 
 type BasketPropsType = {
     basketItems: Array<BasketType>
+    invoiceSubtotal: number
+    changeAmount: (id: string, value: number) => void
+    removeBasketItem: (id: string) => void
 }

@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ProductsType} from "../../../store/productsReducer";
 import {Button} from "@mui/material";
 import {ProductWithOffer} from "./ProductWithOffer/ProductWithOffer";
 import {useDispatch} from "react-redux";
-import {addProductInBasketAC} from "../../../store/basketReducer";
+import {addProductInBasketAC, addProductInBasketWithOfferAC} from "../../../store/basketReducer";
 import style from './Product.module.css'
 
 
-export const Product = ({product, keysId}: ProductPropsType) => {
+export const Product = React.memo(({product, keysId}: ProductPropsType) => {
+
+    const dispatch = useDispatch()
 
     const [show, setShow] = useState<boolean>(true)
 
@@ -15,11 +17,13 @@ export const Product = ({product, keysId}: ProductPropsType) => {
         setShow(!show)
     }
 
-    const dispatch = useDispatch()
-
-    const addToBasketHandler = () => {
+    const addToBasketHandler = useCallback(() => {
         dispatch(addProductInBasketAC(product))
-    };
+    }, [product]);
+   
+    const addToBasketWithOfferHandler = useCallback((keyId: string) => {
+        dispatch(addProductInBasketWithOfferAC(product, keyId))
+    }, [product])
 
     return (
         <div className={style.product}>
@@ -34,6 +38,7 @@ export const Product = ({product, keysId}: ProductPropsType) => {
                                 product={product}
                                 show={show}
                                 key={product.ID + keyId}
+                                addToBasketWithOfferHandler={addToBasketWithOfferHandler}
                             />))}
                         <Button variant={'contained'} onClick={SetViewMode} className={style.product_block__btn}>
                             {show ? 'Подробнее' : 'Свернуть'}
@@ -47,7 +52,7 @@ export const Product = ({product, keysId}: ProductPropsType) => {
             </div>
         </div>
     )
-}
+})
 
 type ProductPropsType = {
     product: ProductsType

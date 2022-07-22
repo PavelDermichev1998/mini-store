@@ -10,6 +10,7 @@ export const BasketItem = ({id, name, amount, price, totalPrice, changeAmount, r
     const changeAmountHandler = (e: React.FormEvent<HTMLInputElement>) => {
         changeAmount(id, +e.currentTarget.value)
     }
+
     const removeItem = () => {
         removeBasketItem(id)
     }

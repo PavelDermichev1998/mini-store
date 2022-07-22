@@ -2,11 +2,12 @@ import React from 'react';
 import {Button, Paper} from "@mui/material";
 import {ProductsType} from "../../../store/productsReducer";
 
-export const FilterForType = ({productsTypes, filterForType, filterForAllType}: ProductsPropsType) => {
+export const FilterForType = React.memo(({productsTypes, filterForType, filterForAllType}: ProductsPropsType) => {
 
     const filterHandler = (productType: string) => {
         filterForType(productType)
     }
+
     const filterAllHandler = () => {
         filterForAllType()
     }
@@ -24,7 +25,7 @@ export const FilterForType = ({productsTypes, filterForType, filterForAllType}: 
             </Paper>
         </div>
     )
-}
+})
 
 type ProductsPropsType = {
     products: Array<ProductsType>

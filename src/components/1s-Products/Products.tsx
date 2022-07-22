@@ -6,7 +6,7 @@ import {Paper} from "@mui/material";
 import {Product} from "./Product/Product";
 import {FilterForType} from "./FilterForType/FilterForType";
 
-export const Products = ({products, filterForType, productsTypes, filterForAllType}: ProductsPropsType) => {
+export const Products = React.memo(({products, filterForType, productsTypes, filterForAllType}: ProductsPropsType) => {
     return <div className={style.products_block}>
         <FilterForType
             products={products}
@@ -29,7 +29,7 @@ export const Products = ({products, filterForType, productsTypes, filterForAllTy
             }
         </Grid>
     </div>
-}
+})
 
 type ProductsPropsType = {
     products: Array<ProductsType>

@@ -1,17 +1,11 @@
 import React from 'react';
 import {Button} from "@mui/material";
 import {ProductsType} from "../../../../store/productsReducer";
-import {addProductInBasketWithOfferAC} from "../../../../store/basketReducer";
-import {useDispatch} from "react-redux";
 import style from "../Product.module.css";
 
-export const ProductWithOffer = ({product, keyId, show}: ProductWithOfferPropsType) => {
+export const ProductWithOffer = ({product, keyId, show, addToBasketWithOfferHandler}: ProductWithOfferPropsType) => {
 
-    const dispatch = useDispatch()
 
-    const addToBasketHandler = () => {
-        dispatch(addProductInBasketWithOfferAC(product, keyId))
-    };
 
     return (
         !show
@@ -21,7 +15,7 @@ export const ProductWithOffer = ({product, keyId, show}: ProductWithOfferPropsTy
                 <div className={style.product_price}>{product.SKU[keyId].PRICE} руб.</div>
                 <Button
                     variant={'outlined'}
-                    onClick={addToBasketHandler}
+                    onClick={() => addToBasketWithOfferHandler(keyId)}
                     style={{marginBottom: '12px'}}
                 >
                     Добавить в корзину
@@ -36,4 +30,5 @@ type ProductWithOfferPropsType = {
     product: ProductsType
     keyId: string
     show: boolean
+    addToBasketWithOfferHandler: (keyId: string) => void
 }
